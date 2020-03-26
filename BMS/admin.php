@@ -54,7 +54,6 @@
   .sidenav a {font-size: 18px;}
 }
     </style>
-
     <body>
         <nav class="navbar fixed-top navbar-light bg-light">
             
@@ -69,38 +68,55 @@
           <!-- Use any element to open the sidenav -->
           <span onclick="openNav()"><img src="m.jpg" height="30px" width="40px"></span>
         <a class="navbar-brand" href="#">Book Management System</a>
+        <button class="btn btn-sm btn-outline-secondary" type="button"></button>
          <button class="btn btn-sm btn-outline-secondary" type="button">Log Out</button>
         </nav>
         <br><br> <br>
-        <h2 style="padding-left: 80px;">Add New Book...</h2>
+        <h2 style="padding-left: 80px;">List of Books...</h2>
+        <div style="padding: 200px;padding-top: 20px;">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Bid</th>
+              <th scope="col">Book Name</th>
+              <th scope="col">Author</th>
+              <th scope="col">Type</th>
+              <th scope="col">Total Copies</th>
+            </tr>
+          </thead>
+          <tbody>
+           <?php
 
-        <br><br>
-        <u><h3 align="center">Register New Book</h3>
-        </u>
-        <form style="padding: 400px;padding-top: 0px;padding-bottom: 0px;" method="GET" action="addbook.php">
-            <div class="form-group">
-              <label >Book Name</label>
-              <input type="text" class="form-control" name="bname" aria-describedby="emailHelp" placeholder="Enter Book Name">
+              $conn = new mysqli('127.0.0.1','root','','BMS');
+              if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+              }
+
+              $sql = "SELECT bid, bname,bauthor,btype,copies FROM Book ORDER BY bname ASC";
+              $result = $conn->query($sql);
+
+              if ($result->num_rows > 0) {
               
-            </div>
-            <div class="form-group">
-              <label >Author Name</label>
-              <input type="text" class="form-control" name="bauthor" placeholder="Author Name">
-            </div>
-            <div class="form-group">
-                <label>Book Type</label>
-                <select class="form-control " name="btype">
-                    <option>Technical</option>
-                    <option>Algebra</option>
-                    <option>Discreate Mathematics</option>
-                    <option>Other</option>
-                  </select>
-              </div>
-            
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-          </form>
-
-
+                while($row = $result->fetch_assoc()) {
+                
+                
+                  ?><tr>
+              <th scope="row"><?php echo $row["bid"]?></th>
+              <td><?php echo $row["bname"]?></td>
+              <td><?php echo $row["bauthor"]?></td>
+              <td><?php echo $row["btype"]?></td>
+              <td><?php echo $row["copies"]?></td>
+            </tr><?php
+            }
+              } else {
+                echo "0 results";
+              }
+              $conn->close();
+              ?>
+          </tbody>
+        </table>
+      
+      </div>
     </body>
 </html>
 <script>

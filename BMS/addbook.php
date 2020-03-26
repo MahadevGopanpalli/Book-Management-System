@@ -63,7 +63,7 @@
             
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="index.php" >Book List</a>
+            <a href="admin.php" >Book List</a>
             <a href="addbook.html">Add New Books</a>
             <a href="#">Books on Rent</a>
             <a href="#">Requests</a>
@@ -82,8 +82,8 @@
         </u>
    <br><br>
    <?php 
-
-        $bname=$_GET['bname'];
+    if(isset($_POST['submit']))
+      { $bname=$_GET['bname'];
         $bauthor=$_GET['bauthor'];
         $btype=$_GET['btype'];
 
@@ -113,7 +113,7 @@ if ($conn->connect_error) {
             
         
 
-
+          }
     ?>
 
 
